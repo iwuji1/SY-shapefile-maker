@@ -1,10 +1,7 @@
 import pandas as pd
 import geopandas as gpd
 import zipfile
-import fiona
-import tempfile
 import os
-import shutil
 
 def process_data(input_path):
 
