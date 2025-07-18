@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Upload File</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+  <div class="page">
+    <div class="form_section">
+      <div class="form_container">
+        <h2>Upload your CSV file</h2>
+          <form method="POST" enctype="multipart/form-data" id="uploadForm">
+            <input type="file" name="file" required>
+            <button type="submit">Run Script</button>
+            <div id="loader" style="display:none;">
+              <div class="spinner"></div>
+              <p>Processing your file...</p>
+            </div>
+          </form>
+      </div>
+      <div class="form_information">
+        <h1>South Yorkshire Schools Postcode Shapefile Generator</h1>
+        <p>This web app, will allow you to upload TUNDRA postcode data and merge it with a geojson file of the South Yorkshire region.</p> 
+        <p>This creates a shapefile with both the school data and demographics for each of the county areas!</p>
+        <br>
+        <br>
+        <h2>Instructions</h2>
+        <ol>
+          <li>Go to the TUNDRA site and download the postcode data from the this <a href="https://www.officeforstudents.org.uk/data-and-analysis/young-participation-by-area/get-the-postcode-data/">link.</a></li>
+          <li>Double check the file has data and upload it on the choose file tab</li>
+          <li>Click the "Run Script" button to process the file.</li>
+          <li>Once processing is complete, you will be prompted to download the generated shapefile.</li>
+          <li>Download the shapefile and input it into the tableau dashboard where intructed</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <p>&copy; 2025 Visualising Data</p>
+  </div>
+  <script>
+    document.getElementById('uploadForm').addEventListener('submit', function(e) {
+      e.preventDefault(); // Prevent the default form submission
+      document.getElementById('loader').style.display = 'block';
+
+    var formData = new FormData(this);
+    fetch('/', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => {
+      if (!response.ok) throw new Error('Network response was not ok');
+      return response.blob();
+    })
+    .then(blob => {
+      document.getElementById('loader').style.display = 'none';
+      var url = window.URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = 'South_Yorkshire_shape.zip';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    })
+    .catch(() => {
+      document.getElementById('loader').style.display = 'none';
+      alert('There was an error processing your file. Please try again.');
+    });
+  });
+  </script>
+</body>
+</html>
