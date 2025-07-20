@@ -5,8 +5,7 @@ click==8.1.8
 Flask==3.1.1
 git-filter-repo==2.47.0
 gunicorn==23.0.0
-geopandas==0.10.0
-greenlet==3.0.0
+geopandas==0.14.3
 idna==3.10
 importlib_metadata==8.7.0
 itsdangerous==2.2.0
@@ -17,6 +16,8 @@ packaging==25.0
 pandas==2.2.3
 python-dateutil==2.9.0.post0
 pytz==2025.1
+pyproj==3.6.1
+shapely==2.0.4
 requests==2.32.3
 tzdata==2025.1
 urllib3==2.3.0
