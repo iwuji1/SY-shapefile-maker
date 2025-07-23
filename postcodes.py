@@ -5,7 +5,7 @@ import os
 
 def process_data(input_path):
 
-    shapefile_folder = "outputs"
+    shapefile_folder = "/tmp/outputs"
     for fname in os.listdir(shapefile_folder):
         fpath = os.path.join(shapefile_folder, fname)
         if os.path.isfile(fpath):
