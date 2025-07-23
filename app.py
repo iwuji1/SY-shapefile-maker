@@ -6,6 +6,7 @@ from postcodes import process_data
 app = Flask(__name__)
 UPLOAD_FOLDER = "/tmp/uploads"
 OUTPUT_FOLDER = "/tmp/outputs"
+
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
@@ -20,7 +21,10 @@ def process():
         return {"error": "No file uploaded"}, 400
     file_id = str(uuid.uuid4())
     input_path = os.path.join(UPLOAD_FOLDER, f"{file_id}.csv")
-    output_zip = os.path.join(OUTPUT_FOLDER, "South_Yorkshire_shape.zip")
+    output_zip = os.path.join(OUTPUT_FOLDER, f"{file_id}_South_Yorkshire_shape.zip")
+    
     file.save(input_path)
+
     process_data(input_path)
-    return send_file(output_zip, mimetype="application/zip")
+    
+    return send_file(output_zip, mimetype="application/zip", as_attachment=True)
