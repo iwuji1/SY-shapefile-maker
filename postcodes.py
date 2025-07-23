@@ -16,6 +16,9 @@ def process_data(input_path):
     # 3. Merge with GeoJSON
     # 4. Output Shapefile
 
+    print("Does /tmp exist?", os.path.exists("/tmp"))
+    print("Writable?", os.access("/tmp", os.W_OK))
+
 
 
     df_ref = pd.read_csv(input_path)
